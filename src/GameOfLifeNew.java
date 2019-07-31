@@ -8,10 +8,9 @@ public class GameOfLifeNew {
         return board[i][j];
     }
 
-    public static void playGame(int[][] board, int n){
-        if (counter < 20) {
+    public static int[][] playGame(int[][] board, int n){
+        int[][] newBoard = new int[n][n];
             System.out.println("\nPlaying the game...");
-            int[][] newBoard = new int[n][n];
             for (int i = 0; i < n; i++){
                 for (int j = 0; j < n; j++){
                     int count = 0;
@@ -41,10 +40,12 @@ public class GameOfLifeNew {
                 }
             }
             printBoard(newBoard, n);
-            counter++;
-            playGame(newBoard, n);
-        }
+        return newBoard;
     }
+
+    //booleans
+    //stops if no changes
+    //stops if all dead
 
     public static void printBoard(int[][] board, int n){
         for (int i = 0; i < n; i++){
@@ -52,14 +53,14 @@ public class GameOfLifeNew {
                 if (board[i][j] == 1){
                     System.out.print("X ");
                 } else {
-                    System.out.print("O ");
+                    System.out.print("  ");
                 }
             }
             System.out.println("");
         }
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         int n = 10;
         int[][] board = new int[n][n];
 
@@ -75,11 +76,14 @@ public class GameOfLifeNew {
                     System.out.print("X ");
                 } else {
                     board[i][j] = 0;
-                    System.out.print("O ");
+                    System.out.print("  ");
                 }
             }
             System.out.println("");
         }
-        playGame(board, n);
+        for (int i = 0; i < 500; i++){
+            board = playGame(board, n);
+            Thread.sleep(100);
+        }
     }
 }
